@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="align-center">
 
-      <v-col sm="6">
+      <v-col md="6">
 
       <v-card id="homepage-text">
         <v-card-title class="text-h3 font-weight-bold white--text mb-5">
@@ -20,7 +20,7 @@
         
       </v-col>
 
-      <v-col sm="6">
+      <v-col md="6">
         <v-img src="../assets/gengar.png"></v-img>
       </v-col>
 
