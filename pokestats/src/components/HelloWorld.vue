@@ -13,7 +13,7 @@
           Discover all the Pokemon and their power stats, type, and more at your fingertips, a resource for Pokemon fans
         </v-card-subtitle>
 
-        <v-btn class="ml-4">
+        <v-btn class="ml-4" @click="goToPokemonList" :loading="getLoadingState">
           Let's Get Started
         </v-btn>
       </v-card>
@@ -29,12 +29,27 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
   export default {
     name: 'HelloWorld',
 
     data: () => ({
       
     }),
+    methods: {
+      ...mapActions(['getPokemonBasicDetails']),
+
+      goToPokemonList() {
+        this.$router.push('/pokemons');
+      }
+    },
+    computed: {
+      ...mapGetters(['getLoadingState'])
+    },
+    created () {
+      this.getPokemonBasicDetails();
+    }
   }
 </script>
 

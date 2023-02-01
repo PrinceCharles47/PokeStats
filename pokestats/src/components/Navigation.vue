@@ -28,7 +28,7 @@
         <v-divider></v-divider>
       
         <v-list nav dense>
-          <v-list-item v-for="(item, i) in drawerButtons" :key="i" link>
+          <v-list-item v-for="(item, i) in drawerButtons" :key="i" link :to="item.to">
             <v-list-item-avatar>
               <v-icon class="mr-2">mdi-pokeball</v-icon>
             </v-list-item-avatar>
@@ -56,38 +56,47 @@
         {
           name: "All Generations",
           icon: "../assets/masterball.png",
+          to: "pokemons"
         },
         {
           name: "Generation I",
-          icon: "../assets/ultraball.png"
+          icon: "../assets/ultraball.png",
+          to: "pokemons"
         },
         {
           name: "Generation II",
-          icon: "../assets/luxuryball.png"
+          icon: "../assets/luxuryball.png",
+          to: "pokemons"
         },
         {
           name: "Generation III",
-          icon: "../assets/quickball.png"
+          icon: "../assets/quickball.png",
+          to: "pokemons"
         },
         {
           name: "Generation IV",
-          icon: "../assets/greatball.png"
+          icon: "../assets/greatball.png",
+          to: "pokemons"
         },
         {
           name: "Generation V",
-          icon: "../assets/dive.png"
+          icon: "../assets/dive.png",
+          to: "pokemons"
         },
         {
           name: "Generation VI",
-          icon: "../assets/ultraball.png"
+          icon: "../assets/ultraball.png",
+          to: "pokemons"
         },
         {
           name: "Generation VII",
-          icon: "../assets/quickball.png"
+          icon: "../assets/quickball.png",
+          to: "pokemons"
         },
         {
           name: "Generation VIII",
-          icon: "../assets/greatball.png"
+          icon: "../assets/greatball.png",
+          to: "pokemons"
         }
       ]
       
