@@ -47,9 +47,9 @@ import { mapActions, mapGetters } from 'vuex';
     computed: {
       ...mapGetters(['getLoadingState'])
     },
-    created () {
-      this.getPokemonBasicDetails();
-    }
+    // created () {
+    //   this.getPokemonBasicDetails();
+    // }
   }
 </script>
 
