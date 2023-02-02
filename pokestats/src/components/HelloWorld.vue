@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-row class="align-center">
+  <v-container fluid class="fill-height container">
+    <v-row class="align-center mx-md-10">
 
       <v-col md="6">
 
@@ -56,8 +56,12 @@ import { mapActions, mapGetters } from 'vuex';
 <style scoped>
 
 /* *{
-  border: solid 1px white;
+  border: solid 1px red;
 } */
+
+.container{
+  background-color: #14023B;
+}
 
 #homepage-text{
   background-color: transparent;

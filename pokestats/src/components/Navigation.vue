@@ -1,12 +1,12 @@
 <template>
-    <v-container>
+    <div>
       <v-app-bar
         app
         dense
-        id="nav-bar"
+        color="white"
       >
-        <v-app-bar-nav-icon @click="drawer = !drawer" dark></v-app-bar-nav-icon>
-        <span class="white--text font-weight-bold">PokeSTATS</span>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <span class="font-weight-bold">PokeSTATS</span>
   
         <v-spacer></v-spacer>
   
@@ -16,7 +16,7 @@
           plain
           class="px-0"
         >
-          <span class="white--text">Also try AniTRACE</span>
+          <span>Also try AniTRACE</span>
         </v-btn>
       </v-app-bar>
 
@@ -40,7 +40,7 @@
         </v-list>
 
       </v-navigation-drawer>
-    </v-container>
+    </div>
   </template>
   
   <script>
@@ -110,9 +110,9 @@
     border: 1px solid grey;
   } */
 
-  #nav-bar{
+  /* #nav-bar{
     background-color: transparent;
-  }
+  } */
 
   #nav-title{
     font-weight: bold;

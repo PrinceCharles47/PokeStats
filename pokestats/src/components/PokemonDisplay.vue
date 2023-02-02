@@ -1,8 +1,8 @@
 <template>
-    <v-container>
+    <v-container class="mt-15">
       <v-row>
           <v-col v-for="(pokemon, i) in getPokemonBasicDetails" :key="i" cols="6" sm="3" md="2">
-            <v-card height="220">
+            <v-card height="220" to="pokemon-details">
               <v-row class="d-flex flex-column align-center">
                 <v-img max-height="100" max-width="100" class="mt-5" :src="pokemon.imageURL"></v-img>
               </v-row>
@@ -13,7 +13,7 @@
                   <v-chip
                   v-for="(type, i) in pokemon.types"
                   :key="i"
-                  class="mr-1 caption white--text"
+                  class="mr-1 caption white--text font-weight-bold"
                   x-small
                   :style="'background-color: ' + type.color"
                   >

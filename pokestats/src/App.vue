@@ -2,7 +2,7 @@
   <v-app id="main">
     <Navigation />
 
-    <v-main>
+    <v-main class="pa-0">
       <router-view/>
     </v-main>
   </v-app>
@@ -25,8 +25,8 @@ export default {
 
 <style scoped>
 
-#main{
+/* #main{
   background-color: #14023B;
-}
+} */
 
 </style>
