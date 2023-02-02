@@ -84,8 +84,6 @@ import { mapActions, mapGetters } from 'vuex';
 
       if(this.offset >= 900){
         this.disabled = false
-      }else{
-        this.disabled = true
       }
 
       if(this.offset > this.initialLimit){
