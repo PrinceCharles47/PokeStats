@@ -3,18 +3,19 @@
       <v-app-bar
         app
         dense
-        color="white"
+        color="#616161"
+        id="nav-bar"
       >
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <span class="font-weight-bold">PokeSTATS</span>
+        <v-app-bar-nav-icon @click="drawer = !drawer" dark></v-app-bar-nav-icon>
+        <span class="font-weight-bold white--text">PokeSTATS</span>
   
         <v-spacer></v-spacer>
   
         <v-btn
           href="https://anime-scene-tracer.pages.dev/"
           target="_blank"
-          plain
-          class="px-0"
+          text
+          class="px-0 white--text"
         >
           <span>Also try AniTRACE</span>
         </v-btn>
@@ -110,9 +111,9 @@
     border: 1px solid grey;
   } */
 
-  /* #nav-bar{
-    background-color: transparent;
-  } */
+  #nav-bar{
+    box-shadow: none;
+  }
 
   #nav-title{
     font-weight: bold;

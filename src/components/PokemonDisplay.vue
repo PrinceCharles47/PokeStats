@@ -2,13 +2,16 @@
     <v-container class="mt-15">
       <v-row v-if="getPokemonData">
           <v-col v-for="(pokemon, i) in getPokemonData" :key="i" cols="6" sm="3" md="2">
-            <v-card height="220" to="pokemon-details">
+            <v-card height="220" @click="setPokemonDetails(pokemon)" class="cards white--text">
+
               <v-row class="d-flex flex-column align-center">
                 <v-img max-height="100" max-width="100" class="mt-5" :src="pokemon.imageURL"></v-img>
               </v-row>
+
               <v-row class="d-flex flex-column align-center">
                 <v-card-title class="py-2 font-weight-bold">{{ pokemon.name }}</v-card-title>
                 <v-card-subtitle class="pt-0 caption">{{ pokemon.genus }}</v-card-subtitle>
+
                 <v-row class="pl-1">
                   <v-chip
                   v-for="(type, i) in pokemon.types"
@@ -20,7 +23,9 @@
                   {{ type.type.toUpperCase() }}
                   </v-chip>
                 </v-row>
+
               </v-row>
+
             </v-card>
           </v-col>
       </v-row>
@@ -34,9 +39,9 @@
       ></v-pagination> -->
 
       <v-row class="mb-10">
-        <v-btn width="100" @click="setPreviousPageData" text>Previous</v-btn>
+        <v-btn width="100" @click="setPreviousPageData" text class="white--text">Previous</v-btn>
         <v-spacer></v-spacer>
-        <v-btn width="100" @click="setNextPageData" :disabled="disabled" text>Next</v-btn>
+        <v-btn width="100" @click="setNextPageData" :disabled="disabled" text class="white--text">Next</v-btn>
       </v-row>
       
   </v-container>
@@ -57,7 +62,7 @@ import { mapActions, mapGetters } from 'vuex';
     disabled: false
   }),
   methods: {
-    ...mapActions(['getPartialPokemonData']),
+    ...mapActions(['getPartialPokemonData', 'getSinglePokemonData']),
 
     setNextPageData () {
       this.page = this.page + 1
@@ -95,6 +100,11 @@ import { mapActions, mapGetters } from 'vuex';
       console.log(this.offset + " "  + this.limit);
 
       this.getPartialPokemonData({limit: this.initialLimit, offset: this.offset})
+    },
+
+    setPokemonDetails (pokemon) {
+      this.getSinglePokemonData(pokemon)
+      this.$router.push('/pokemon-details')
     }
   },
   computed: {
@@ -111,6 +121,10 @@ import { mapActions, mapGetters } from 'vuex';
 /* *{
   border: solid 1px grey;
 } */
+
+.cards{
+  background-color: transparent;
+}
   
 </style>
   

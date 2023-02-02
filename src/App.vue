@@ -1,5 +1,5 @@
 <template>
-  <v-app id="main">
+  <v-app id="main" style="background-color: #616161">
     <Navigation />
 
     <v-main class="pa-0">
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// import { mapGetters } from "vuex";
 import Navigation from "./components/Navigation.vue"
 
 export default {
@@ -19,7 +20,18 @@ export default {
   },
   data: () => ({
     //
-  })
+  }),
+  // computed: {
+  //   ...mapGetters(['getSinglePokemonData']),
+
+  //   setBackgroundColor () {
+  //     if(this.getSinglePokemonData[0]){
+  //       return this.getSinglePokemonData[0].types[0].color
+  //     }else{
+  //       return 'white'
+  //     }
+  //   }
+  // }
 };
 </script>
 

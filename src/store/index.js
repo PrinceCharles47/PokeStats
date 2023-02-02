@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     loading: false,
     pokemonBasicDetails: [],
-    partialPokemonData: []
+    partialPokemonData: [],
+    singlePokemonData: []
 
   },
   getters: {
@@ -21,12 +22,17 @@ export default new Vuex.Store({
 
     getPokemonData(state) {
       return state.partialPokemonData;
+    },
+
+    getSinglePokemonData(state) {
+      return state.singlePokemonData;
     }
   },
   mutations: {
     SET_POKEMON_BASIC_DETAILS (state, data) {state.pokemonBasicDetails = data},
     SET_LOADING (state) { state.loading = !state.loading},
-    SET_PARTIAL_POKEMON_DATA (state, data) {state.partialPokemonData = data}
+    SET_PARTIAL_POKEMON_DATA (state, data) {state.partialPokemonData = data},
+    SET_SINGLE_POKEMON_DATA (state, data) {state.singlePokemonData = data}
   },
   actions: {
     async getPokemonBasicDetails ({commit}) {
@@ -312,6 +318,70 @@ export default new Vuex.Store({
         commit('SET_PARTIAL_POKEMON_DATA', pokemonBasicData)
         commit('SET_LOADING')
       })
+    },
+
+    async getSinglePokemonData ({commit}, payload) {
+      console.log('payload: ', payload);
+      let pokemonData = []
+
+      await fetch ('https://pokeapi.co/api/v2/pokemon/' + payload.id, {
+        method: 'GET'
+      }).then(response => response.json())
+      .then(data => {
+
+        let stats = []
+
+        data.stats.forEach(stat => {
+          stats.push({
+            name: stat.stat.name,
+            value: stat.base_stat
+          })
+        })
+
+        pokemonData.push({
+          id: payload.id,
+          name: payload.name,
+          types: payload.types,
+          imageURL: payload.imageURL,
+          base_stat: stats
+        })
+
+        return pokemonData
+      }).then(async (pokemonData) => {
+
+        console.log('pokemon data: ',pokemonData);
+        let singlePokemonData = []
+
+        await fetch ('https://pokeapi.co/api/v2/pokemon-species/' + pokemonData[0].id, {
+          method: 'GET',
+        }).then(response => response.json())
+        .then(data => {
+
+          let flavorText = []
+
+          data.flavor_text_entries.forEach(flavorTextEntry => {
+            if(flavorTextEntry.language.name  === 'en'){
+              flavorText.push({entry: flavorTextEntry.flavor_text})
+            }
+          })
+
+          singlePokemonData.push({
+            id: pokemonData[0].id,
+            name: pokemonData[0].name,
+            types: pokemonData[0].types,
+            imageURL: pokemonData[0].imageURL,
+            base_stat: pokemonData[0].base_stat,
+            flavor_text: flavorText[0].entry
+          })
+
+        })
+
+        return singlePokemonData
+      }).then(singlePokemonData => {
+        console.log(singlePokemonData);
+        commit('SET_SINGLE_POKEMON_DATA', singlePokemonData)
+      })
+
     }
   },
   modules: {
