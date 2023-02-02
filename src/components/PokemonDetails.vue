@@ -1,8 +1,8 @@
 <template>
-    <div class="mt-12 white--text">
+    <div class="mt-12">
       <v-row class="my-1 mx-0">
         <v-spacer></v-spacer>
-        <v-btn text to="pokemons" class="white--text">Go Back</v-btn>
+        <v-btn text to="pokemons">Go Back</v-btn>
       </v-row>
 
       <v-container>
