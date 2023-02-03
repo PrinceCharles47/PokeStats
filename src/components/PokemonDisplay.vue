@@ -1,5 +1,10 @@
 <template>
     <v-container class="mt-15">
+      <v-row class="mx-0">
+        <v-text-field outlined dense label="Input PokeMon name" v-model="searchItem" @change="setAllPokemonData"></v-text-field>
+        <v-btn text @click="searchInputPokemon(searchItem)">Search</v-btn>
+      </v-row>
+
       <v-row v-if="getPokemonData">
           <v-col v-for="(pokemon, i) in getPokemonData" :key="i" cols="6" sm="3" md="2">
             <v-card height="220" @click="setPokemonDetails(pokemon)">
@@ -54,6 +59,7 @@ import { mapActions, mapGetters } from 'vuex';
   name: 'PokemonDisplay',
   
   data: () => ({
+    searchItem: '',
     page: 0,
     limit: 18,
     offset: 0,
@@ -62,7 +68,7 @@ import { mapActions, mapGetters } from 'vuex';
     disabled: false
   }),
   methods: {
-    ...mapActions(['getPartialPokemonData', 'getSinglePokemonData']),
+    ...mapActions(['getPartialPokemonData', 'getSinglePokemonData', 'searchPokemon']),
 
     setNextPageData () {
       this.page = this.page + 1
@@ -105,7 +111,17 @@ import { mapActions, mapGetters } from 'vuex';
     setPokemonDetails (pokemon) {
       this.getSinglePokemonData(pokemon)
       this.$router.push('/pokemon-details')
-    }
+    },
+
+    setAllPokemonData () {
+      if(this.searchItem === null || this.searchItem === '') {
+        this.getPartialPokemonData({limit: this.limit, offset: this.offset})
+      }
+    },
+
+    searchInputPokemon (pokemon) {
+      this.searchPokemon(pokemon)
+    },
   },
   computed: {
     ...mapGetters(['getPokemonBasicDetails', 'getPokemonData']),

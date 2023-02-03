@@ -8,7 +8,8 @@ export default new Vuex.Store({
     loading: false,
     pokemonBasicDetails: [],
     partialPokemonData: [],
-    singlePokemonData: []
+    singlePokemonData: [],
+    searchedPokemonData: [],
 
   },
   getters: {
@@ -26,13 +27,18 @@ export default new Vuex.Store({
 
     getSinglePokemonData(state) {
       return state.singlePokemonData;
+    },
+
+    getSearchedPokemonData(state) {
+      return state.singlePokemonData;
     }
   },
   mutations: {
     SET_POKEMON_BASIC_DETAILS (state, data) {state.pokemonBasicDetails = data},
     SET_LOADING (state) { state.loading = !state.loading},
     SET_PARTIAL_POKEMON_DATA (state, data) {state.partialPokemonData = data},
-    SET_SINGLE_POKEMON_DATA (state, data) {state.singlePokemonData = data}
+    SET_SINGLE_POKEMON_DATA (state, data) {state.singlePokemonData = data},
+    SET_SEARCHED_POKEMON_DATA (state, data) {state.searchedPokemonData = data}
   },
   actions: {
     async getPokemonBasicDetails ({commit}) {
@@ -343,6 +349,7 @@ export default new Vuex.Store({
           name: payload.name,
           types: payload.types,
           imageURL: payload.imageURL,
+          genus: payload.genus,
           base_stat: stats
         })
 
@@ -370,6 +377,7 @@ export default new Vuex.Store({
             name: pokemonData[0].name,
             types: pokemonData[0].types,
             imageURL: pokemonData[0].imageURL,
+            genus: pokemonData[0].genus,
             base_stat: pokemonData[0].base_stat,
             flavor_text: flavorText[0].entry
           })
@@ -382,6 +390,146 @@ export default new Vuex.Store({
         commit('SET_SINGLE_POKEMON_DATA', singlePokemonData)
       })
 
+    },
+
+    async searchPokemon ({commit}, payload) {
+      let pokemonInitialData = []
+
+      await fetch ('https://pokeapi.co/api/v2/pokemon-species/' + payload, {
+        method: 'GET',
+      }).then(response => response.json())
+      .then(data => {
+
+        if(data.genera.length){
+          data.genera.forEach(genus => {
+            if(genus.language.name === 'en'){
+              pokemonInitialData.push({
+                id: data.id,
+                name: data.name,
+                genus: genus.genus,
+              })
+            }
+          })
+        }else{
+          pokemonInitialData.push({
+            id: data.id,
+            name: data.name,
+            genus: 'No Data Available',
+          })
+        }
+
+        return pokemonInitialData
+      }).then( async (pokemonInitialData) => {
+        let pokemonData = []
+
+        await fetch ('https://pokeapi.co/api/v2/pokemon/' + pokemonInitialData[0].id, {
+          method: 'GET',
+        }).then(response => response.json())
+        .then(data => {
+
+          let pokemonTypes = []
+
+          data.types.forEach(type => {
+
+            let typeColors =[
+              {
+                type: 'normal',
+                color: '#a8a878'
+              },
+              {
+                type: 'electric',
+                color: '#f8d030'
+              },
+              {
+                type: 'grass',
+                color: '#76c850'
+              },
+              {
+                type: 'fire',
+                color: '#f08030'
+              },
+              {
+                type: 'water',
+                color: '#6890f0'
+              },
+              {
+                type: 'ground',
+                color: '#e0c068'
+              },
+              {
+                type: 'dragon',
+                color: '#7038f8'
+              },
+              {
+                type: 'fairy',
+                color: '#ee99ac'
+              },
+              {
+                type: 'psychic',
+                color: '#f85888'
+              },
+              {
+                type: 'rock',
+                color: '#b8a076'
+              },
+              {
+                type: 'ice',
+                color: '#98d8d8'
+              },
+              {
+                type: 'ghost',
+                color: '#705898'
+              },
+              {
+                type: 'flying',
+                color: '#a890f0'
+              },
+              {
+                type: 'bug',
+                color: '#a8b890'
+              },
+              {
+                type: 'poison',
+                color: '#a040a0'
+              },
+              {
+                type: 'dark',
+                color: '#413f40'
+              },
+              {
+                type: 'steel',
+                color: '#b8b8d0'
+              },
+              {
+                type: 'fighting',
+                color: '#c03028'
+              }
+            ]
+
+            typeColors.forEach(typeColor => {
+              if(type.type.name === typeColor.type){
+                pokemonTypes.push({
+                  type: type.type.name,
+                  color: typeColor.color
+                })
+              }
+            })
+          })
+
+          pokemonData.push({
+            id: data.id,
+            name: pokemonInitialData[0].name.toUpperCase(),
+            genus: pokemonInitialData[0].genus,
+            types: pokemonTypes,
+            imageURL: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + data.id + '.png'
+          })
+        })
+
+        return pokemonData
+      }).then(pokemonData => {
+        console.log(pokemonData);
+        commit('SET_PARTIAL_POKEMON_DATA', pokemonData)
+      })
     }
   },
   modules: {

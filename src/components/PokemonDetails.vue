@@ -18,15 +18,16 @@
           <v-col class="d-flex flex-column justify-center" md="5">
             <v-card-title class="text-h4 pl-0 py-0">#{{ pokemonData.id }}</v-card-title>
             <v-card-title class="text-h3 font-weight-bold pl-0">{{ pokemonData.name }}</v-card-title>
+            <v-card-subtitle class="pl-0">{{ pokemonData.genus }}</v-card-subtitle>
             
             <div>
               <v-chip v-for="(type, i) in pokemonData.types"
               :key="i"
-              class="mr-2 font-weight-bold white--text"
+              class="mr-2 overline white--text pl-0"
               :color="type.color"
               small
               >
-
+              <v-icon class="mr-1 my-1">mdi-pokeball</v-icon>
               {{ type.type.toUpperCase() }}
             
               </v-chip>
